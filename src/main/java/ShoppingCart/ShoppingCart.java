@@ -4,43 +4,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    public ArrayList<Product> shoppingCart = new ArrayList<>();
+    public ArrayList<CartItem> shoppingCart = new ArrayList<>();
 
-    public String noProductsAvaiable(){
-        String noProductAvailable = "No products avaiable";
-        return noProductAvailable;
+    private void noProductsAvaiable() {
+        System.out.println("No products avaiable");
+    }
+
+    private void subtractProductQuantity(Product product){
+        product.setQuantity(product.getQuantity() - 1);
+    }
+
+    private void addItemToShoppingCart(Product product) {
+        CartItem cartItem = new CartItem(product, 1);
+        shoppingCart.add(cartItem);
+        subtractProductQuantity(product);
+    }
+
+    private void addQuantityToItemInShoppingCart(Product product) {
+        for (CartItem item : shoppingCart) {
+            if (shoppingCart.contains(item)) {
+                item.quantity++;
+                subtractProductQuantity(product);
+            } else {
+                addItemToShoppingCart(product);
+            }
+        }
+    }
+
+    private boolean isShoppingCartEmpty() {
+        return shoppingCart.isEmpty();
+    }
+
+    private boolean isInventoryInProduct(Product product) {
+        return product.getQuantity() == 0;
     }
 
     public void addProduct(Product product) {
-        if(product.getQuantity() == 0){
+        if (isInventoryInProduct(product)) {
             noProductsAvaiable();
+            return;
         }
-        else if(shoppingCart.contains(product)) {
-            int item = shoppingCart.indexOf(product);
-            shoppingCart.get(item).setQuantity(shoppingCart.get(item).getQuantity()+1);
+        if (isShoppingCartEmpty()) {
+            addItemToShoppingCart(product);
         } else {
-            shoppingCart.add(product);
-            product.setQuantity(1);
-        }
-
-    }
-
-    public void removeProduct(Product product){
-        int item = shoppingCart.indexOf(product);
-        if(shoppingCart.get(item).getQuantity() > 1){
-            shoppingCart.get(item).setQuantity(shoppingCart.get(item).getQuantity()-1);
+            addQuantityToItemInShoppingCart(product);
         }
     }
 
-    public void showShoppingCart(){
-        for(Product product: shoppingCart) {
-            int item = shoppingCart.indexOf(product);
-            System.out.println("Product ID: " + shoppingCart.get(item).getId());
-            System.out.println("Product Name: " + shoppingCart.get(item).getName());
-            System.out.println("Product Description: " + shoppingCart.get(item).getDescription());
-            System.out.println("Produt Quantity: " + shoppingCart.get(item).getQuantity());
-            System.out.println("Product Price: " + shoppingCart.get(item).getPrice() + "\n");
+
+    public void showShoppingCart() {
+        for (CartItem item : shoppingCart) {
+            System.out.println("Product Name: " + item.product.getName());
+            System.out.println("Product Description: " + item.product.getDescription());
+            System.out.println("Product Price: " + item.product.getPrice());
+            System.out.println("Product Quantity: " + item.quantity + "\n");
         }
+    }
+}
+
+class CartItem {
+    Product product;
+    int quantity;
+
+    public CartItem(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
     }
 }
 
