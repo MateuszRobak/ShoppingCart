@@ -1,7 +1,6 @@
 package ShoppingCart;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ShoppingCart {
     public ArrayList<CartItem> shoppingCart = new ArrayList<>();
@@ -35,12 +34,12 @@ public class ShoppingCart {
         return shoppingCart.isEmpty();
     }
 
-    private boolean isInventoryInProduct(Product product) {
+    private boolean isInventoryInProductEmpty(Product product) {
         return product.getQuantity() == 0;
     }
 
     public void addProduct(Product product) {
-        if (isInventoryInProduct(product)) {
+        if (isInventoryInProductEmpty(product)) {
             noProductsAvaiable();
             return;
         }
