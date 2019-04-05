@@ -1,29 +1,19 @@
 package ShoppingCart;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         Product romper = new Romper(3);
+        Product book = new Book(4);
         ShoppingCart shoppingCart = new ShoppingCart();
 
 
         shoppingCart.addProduct(romper);
-
-
-
-        shoppingCart.showShoppingCart();
-        shoppingCart.addProduct(romper);
+        shoppingCart.addProduct(book);
 
         shoppingCart.showShoppingCart();
-        shoppingCart.addProduct(romper);
-        shoppingCart.showShoppingCart();
-        shoppingCart.addProduct(romper);
-        shoppingCart.showShoppingCart();
-
 
 
         System.out.println("Romper quantity: " + romper.getQuantity());
+        System.out.println("Book quantity: " + book.getQuantity());
     }
 }

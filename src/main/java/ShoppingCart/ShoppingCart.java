@@ -3,13 +3,13 @@ package ShoppingCart;
 import java.util.ArrayList;
 
 public class ShoppingCart {
-    public ArrayList<CartItem> shoppingCart = new ArrayList<>();
+    private ArrayList<CartItem> shoppingCart = new ArrayList<>();
 
     private void noProductsAvaiable() {
         System.out.println("No products avaiable");
     }
 
-    private void subtractProductQuantity(Product product){
+    private void subtractProductQuantity(Product product) {
         product.setQuantity(product.getQuantity() - 1);
     }
 
@@ -34,12 +34,12 @@ public class ShoppingCart {
         return shoppingCart.isEmpty();
     }
 
-    private boolean isInventoryInProductEmpty(Product product) {
+    private boolean isNoInventoryInProduct(Product product) {
         return product.getQuantity() == 0;
     }
 
     public void addProduct(Product product) {
-        if (isInventoryInProductEmpty(product)) {
+        if (isNoInventoryInProduct(product)) {
             noProductsAvaiable();
             return;
         }
@@ -49,7 +49,6 @@ public class ShoppingCart {
             addQuantityToItemInShoppingCart(product);
         }
     }
-
 
     public void showShoppingCart() {
         for (CartItem item : shoppingCart) {
