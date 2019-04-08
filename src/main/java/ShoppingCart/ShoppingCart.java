@@ -1,12 +1,13 @@
 package ShoppingCart;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class ShoppingCart {
     private ArrayList<CartItem> shoppingCart = new ArrayList<>();
 
-    private void noProductsAvaiable() {
-        System.out.println("No products avaiable");
+    private void noProductsAvaiable(Product product) {
+        System.out.println("No " + product.getName() +" avaiable\n");
     }
 
     private void subtractProductQuantity(Product product) {
@@ -19,15 +20,24 @@ public class ShoppingCart {
         subtractProductQuantity(product);
     }
 
+    private boolean isItemInShoppingCart(CartItem item, Product product){
+        return item.product.getName().equals(product.getName());
+    }
+
     private void addQuantityToItemInShoppingCart(Product product) {
+        boolean exists = false;
         for (CartItem item : shoppingCart) {
-            if (shoppingCart.contains(item)) {
+            if (isItemInShoppingCart(item,product)) {
                 item.quantity++;
                 subtractProductQuantity(product);
-            } else {
-                addItemToShoppingCart(product);
+                exists = true;
+                break;
             }
         }
+        if (!exists) {
+            addItemToShoppingCart(product);
+        }
+
     }
 
     private boolean isShoppingCartEmpty() {
@@ -40,7 +50,7 @@ public class ShoppingCart {
 
     public void addProduct(Product product) {
         if (isNoInventoryInProduct(product)) {
-            noProductsAvaiable();
+            noProductsAvaiable(product);
             return;
         }
         if (isShoppingCartEmpty()) {
@@ -51,11 +61,12 @@ public class ShoppingCart {
     }
 
     public void showShoppingCart() {
+        System.out.println("YOUR SHOPPING CART \n");
         for (CartItem item : shoppingCart) {
             System.out.println("Product Name: " + item.product.getName());
             System.out.println("Product Description: " + item.product.getDescription());
             System.out.println("Product Price: " + item.product.getPrice());
-            System.out.println("Product Quantity: " + item.quantity + "\n");
+            System.out.println("Product Quantity: " + item.quantity + "\n\n");
         }
     }
 }

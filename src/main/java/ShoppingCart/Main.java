@@ -12,6 +12,21 @@ public class Main {
 
         shoppingCart.showShoppingCart();
 
+        shoppingCart.addProduct(book);
+        shoppingCart.showShoppingCart();
+
+        shoppingCart.addProduct(book);
+        shoppingCart.showShoppingCart();
+
+
+        shoppingCart.addProduct(book);
+        shoppingCart.showShoppingCart();
+
+
+        shoppingCart.addProduct(book);
+        shoppingCart.showShoppingCart();
+
+
 
         System.out.println("Romper quantity: " + romper.getQuantity());
         System.out.println("Book quantity: " + book.getQuantity());
